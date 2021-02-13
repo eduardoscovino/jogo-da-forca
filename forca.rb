@@ -47,6 +47,10 @@ def substitui_chute_certo(palavra, chute, view)
   end
 end
 
+def completou_array?(view)
+  view.include? "_"
+end
+
 # dando boas vindas
 boas_vindas
 avisa_escolha
@@ -76,5 +80,13 @@ while tentativa_atual <= max_tentativas
     errou_chute
     tentativa_atual += 1
   end
+
+  if completou_array?(view_palavra)
+    puts "Próximo chute"
+  else
+    tentativa_atual = 6
+    puts "Ganhou o jogo! A palavra era #{view_palavra.join}"
+  end
 end
 
+puts "\n\nFim do jogo"
