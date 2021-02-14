@@ -1,5 +1,33 @@
 def boas_vindas
+  puts "******************************************"
   puts "****** Bem vindo ao jogo da forca!! ******"
+  puts "******************************************"
+end
+
+def diz_as_regras
+  puts "Regras do jogo:"
+  puts "1 - Escolha um tema"
+  puts "2 - Digite seu chute (não há til ou acentuação nas palavras)"
+  puts "Você tem 5 tentativas e a cada erro perde uma"
+end
+
+def pergunta_tema(temas)
+  puts "Qual tema deseja jogar?"
+  temas.each_with_index { |tema, index| puts "#{index + 1} - #{tema}"}
+end
+
+def mostra_tema_escolhido(temas, opcao)
+  puts "Legal! Você escolheu #{temas[opcao - 1]}"
+end
+def sorteia_palavra(tema, palavra, frutas, esportes, cores)
+  case tema
+  when 1
+    palavra_secreta = frutas[rand(0..frutas.size)]
+  when 2
+    palavra_secreta = esportes[rand(0..esportes.size)]
+  when 3
+    palavra_secreta = cores[rand(0..cores.size)]
+  end
 end
 
 def avisa_escolha
@@ -53,12 +81,26 @@ end
 
 # dando boas vindas
 boas_vindas
-avisa_escolha
+
+# diz as regras
+diz_as_regras
+
+# escolhendo o tema da forca
+frutas = ["banana", "maça", "limao", "tangerina", "laranja", "uva", "abacaxi", "manga", "pera", "lichia", "figo"]
+esportes = ["futebol", "handebol", "volei", "remo", "nataçao", "judo", "tiro", "taekwondo", "esgrima", "basquete", "tenis"]
+cores = ["verde", "amarelo", "laranja", "vermelho", "azul", "branco", "preto", "violeta", "roxo", "lilas", "anil", "rubro", "rosa", "fucsia"]
+array_temas = ["Frutas", "Esportes Olímpicos", "Cores"]
+pergunta_tema(array_temas)
+tema = gets.chomp.to_i
+mostra_tema_escolhido(array_temas, tema)
 
 # escolhendo a palavra
+avisa_escolha
+# palavra_secreta = ""
+# sorteia_palavra(tema, palavra_secreta, frutas, esportes, cores)
 palavra_secreta = "palavra"
 array_palavra = palavra_secreta.chars
-view_palavra = ['_', '_', '_', '_', '_', '_', '_']
+view_palavra = Array.new(array_palavra.size, "_")
 diz_num_letras(palavra_secreta, view_palavra)
 
 # setando as tentativas
