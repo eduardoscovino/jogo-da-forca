@@ -71,7 +71,7 @@ while tentativa_atual <= max_tentativas
 
   # recebendo o chute
   pede_chute
-  chute = gets.chomp
+  chute = gets.chomp.downcase
   avisa_chute(chute)
 
   if tem_a_letra?(array_palavra, chute)
