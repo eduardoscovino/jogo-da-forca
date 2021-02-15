@@ -19,14 +19,15 @@ end
 def mostra_tema_escolhido(temas, opcao)
   puts "Legal! Você escolheu #{temas[opcao - 1]}"
 end
-def sorteia_palavra(tema, palavra, frutas, esportes, cores)
+
+def sorteia_palavra(tema, frutas, esportes, cores)
   case tema
   when 1
-    palavra_secreta = frutas[rand(0..frutas.size)]
+    frutas[rand(0..frutas.size)]
   when 2
-    palavra_secreta = esportes[rand(0..esportes.size)]
+    esportes[rand(0..esportes.size)]
   when 3
-    palavra_secreta = cores[rand(0..cores.size)]
+    cores[rand(0..cores.size)]
   end
 end
 
@@ -96,9 +97,7 @@ mostra_tema_escolhido(array_temas, tema)
 
 # escolhendo a palavra
 avisa_escolha
-# palavra_secreta = ""
-# sorteia_palavra(tema, palavra_secreta, frutas, esportes, cores)
-palavra_secreta = "palavra"
+palavra_secreta = sorteia_palavra(tema, frutas, esportes, cores)
 array_palavra = palavra_secreta.chars
 view_palavra = Array.new(array_palavra.size, "_")
 diz_num_letras(palavra_secreta, view_palavra)
