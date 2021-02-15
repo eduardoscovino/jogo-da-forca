@@ -12,7 +12,7 @@ def diz_as_regras
 end
 
 def pergunta_tema(temas)
-  puts "Qual tema deseja jogar?"
+  puts "Digite o número do tema que deseja para a forca"
   temas.each_with_index { |tema, index| puts "#{index + 1} - #{tema}"}
 end
 
@@ -55,6 +55,14 @@ def avisa_chute(chute)
   puts "Seu chute foi #{chute}"
 end
 
+def eh_palavra?(chute)
+  chute.size > 1
+end
+
+def acertou_chute(chute, palavra)
+  chute == palavra
+end
+
 def tem_a_letra?(palavra, chute)
   palavra.include? chute
 end
@@ -91,8 +99,16 @@ frutas = ["banana", "maça", "limao", "tangerina", "laranja", "uva", "abacaxi", 
 esportes = ["futebol", "handebol", "volei", "remo", "nataçao", "judo", "tiro", "taekwondo", "esgrima", "basquete", "tenis"]
 cores = ["verde", "amarelo", "laranja", "vermelho", "azul", "branco", "preto", "violeta", "roxo", "lilas", "anil", "rubro", "rosa", "fucsia"]
 array_temas = ["Frutas", "Esportes Olímpicos", "Cores"]
-pergunta_tema(array_temas)
-tema = gets.chomp.to_i
+escolheu_tema = false
+while escolheu_tema == false
+  pergunta_tema(array_temas)
+  tema = gets.chomp.to_i
+  if (1..3).include? tema
+    escolheu_tema = true
+  else
+    puts "Opção inválida. Tente novamente"
+  end
+end
 mostra_tema_escolhido(array_temas, tema)
 
 # escolhendo a palavra
@@ -115,18 +131,28 @@ while tentativa_atual <= max_tentativas
   chute = gets.chomp.downcase
   avisa_chute(chute)
 
-  if tem_a_letra?(array_palavra, chute)
-    acertou_chute(array_palavra, chute, view_palavra)
-  else
-    errou_chute
-    tentativa_atual += 1
-  end
 
-  if completou_array?(view_palavra)
-    puts "Próximo chute"
+  if eh_palavra?(chute)
+    if acertou_chute?(chute, palavra_secreta)
+      puts "Ganhou o jogo! A palavra era #{view_palavra.join}"
+      tentativa_atual = 6
+    else
+      tentativa_atual += 1
+    end
   else
-    tentativa_atual = 6
-    puts "Ganhou o jogo! A palavra era #{view_palavra.join}"
+    if tem_a_letra?(array_palavra, chute)
+      acertou_chute(array_palavra, chute, view_palavra)
+    else
+      errou_chute
+      tentativa_atual += 1
+    end
+  
+    if completou_array?(view_palavra)
+      puts "Próximo chute"
+    else
+      tentativa_atual = 6
+      puts "Ganhou o jogo! A palavra era #{view_palavra.join}"
+    end
   end
 end
 
