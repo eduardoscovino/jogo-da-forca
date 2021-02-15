@@ -59,8 +59,12 @@ def eh_palavra?(chute)
   chute.size > 1
 end
 
-def acertou_chute(chute, palavra)
+def palavra_correta?(chute, palavra)
   chute == palavra
+end
+
+def acertou_palavra(palavra)
+  puts "Ganhou o jogo! A palavra era #{palavra}"
 end
 
 def tem_a_letra?(palavra, chute)
@@ -73,8 +77,9 @@ def acertou_chute(array, chute, view)
   puts "\n#{view.join(" ")}"
 end
 
-def errou_chute
+def errou_chute(view)
   puts "Errou!"
+  puts "\n#{view.join(" ")}"
 end
 
 def substitui_chute_certo(palavra, chute, view)
@@ -121,6 +126,7 @@ diz_num_letras(palavra_secreta, view_palavra)
 # setando as tentativas
 max_tentativas = 5
 tentativa_atual = 1
+ganhou_jogo = false
 
 while tentativa_atual <= max_tentativas
   # num de tentativas
@@ -131,19 +137,19 @@ while tentativa_atual <= max_tentativas
   chute = gets.chomp.downcase
   avisa_chute(chute)
 
-
   if eh_palavra?(chute)
-    if acertou_chute?(chute, palavra_secreta)
-      puts "Ganhou o jogo! A palavra era #{view_palavra.join}"
+    if palavra_correta?(chute, palavra_secreta)
+      acertou_palavra(palavra_secreta)
       tentativa_atual = 6
     else
+      errou_chute(view_palavra)
       tentativa_atual += 1
     end
   else
     if tem_a_letra?(array_palavra, chute)
       acertou_chute(array_palavra, chute, view_palavra)
     else
-      errou_chute
+      errou_chute(view_palavra)
       tentativa_atual += 1
     end
   
