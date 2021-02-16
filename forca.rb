@@ -23,11 +23,11 @@ end
 def sorteia_palavra(tema, frutas, esportes, cores)
   case tema
   when 1
-    frutas[rand(0..frutas.size)]
+    frutas[rand(0...frutas.size)]
   when 2
-    esportes[rand(0..esportes.size)]
+    esportes[rand(0...esportes.size)]
   when 3
-    cores[rand(0..cores.size)]
+    cores[rand(0...cores.size)]
   end
 end
 
@@ -52,7 +52,7 @@ def pede_chute
 end
 
 def avisa_chute(chute)
-  puts "Seu chute foi #{chute}"
+  puts "\n\nSeu chute foi #{chute}"
 end
 
 def eh_palavra?(chute)
@@ -61,10 +61,6 @@ end
 
 def palavra_correta?(chute, palavra)
   chute == palavra
-end
-
-def acertou_palavra(palavra)
-  puts "Ganhou o jogo! A palavra era #{palavra}"
 end
 
 def tem_a_letra?(palavra, chute)
@@ -89,8 +85,16 @@ def substitui_chute_certo(palavra, chute, view)
   end
 end
 
-def completou_array?(view)
+def array_incompleto?(view)
   view.include? "_"
+end
+
+def mensagem_resultado(resultado, palavra)
+  if resultado
+    puts "\n\nGanhou o jogo! A palavra era #{palavra}"
+  else
+    puts "\n\nQue pena, você perdeu! A palavra era #{palavra}"
+  end
 end
 
 # dando boas vindas
@@ -137,9 +141,11 @@ while tentativa_atual <= max_tentativas
   chute = gets.chomp.downcase
   avisa_chute(chute)
 
+  # bifurcaçao palavra e letra
   if eh_palavra?(chute)
     if palavra_correta?(chute, palavra_secreta)
-      acertou_palavra(palavra_secreta)
+      ganhou_jogo = true
+      view_palavra = chute.chars
       tentativa_atual = 6
     else
       errou_chute(view_palavra)
@@ -152,14 +158,16 @@ while tentativa_atual <= max_tentativas
       errou_chute(view_palavra)
       tentativa_atual += 1
     end
-  
-    if completou_array?(view_palavra)
-      puts "Próximo chute"
-    else
-      tentativa_atual = 6
-      puts "Ganhou o jogo! A palavra era #{view_palavra.join}"
-    end
+  end
+  # proximo chute
+  if array_incompleto?(view_palavra)
+    puts "Próximo chute"
+  else
+    tentativa_atual = 6
+    ganhou_jogo = true
   end
 end
+
+mensagem_resultado(ganhou_jogo, palavra_secreta)
 
 puts "\n\nFim do jogo"
