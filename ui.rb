@@ -52,6 +52,35 @@ def mensagem_resultado(resultado, palavra)
   end
 end
 
+def desenha_forca(erros)
+	cabeca = "   "
+	bracos = "   "
+	pernas = "   "
+	corpo = " "
+	if erros >= 1
+		cabeca = "(_)"
+	end
+	if erros >= 2
+		bracos = " | "
+		corpo = "|"
+	end
+	if erros >= 3
+		bracos = "\\|/"
+	end
+	if erros >= 4
+		pernas = "/ \\"
+	end
+	puts "  _______       \n"
+	puts " |/      |      \n"
+	puts " |      #{cabeca}  \n"
+	puts " |      #{bracos}  \n"
+	puts " |       #{corpo}     \n"
+	puts " |      #{pernas}   \n"
+	puts " |              \n"
+	puts "_|___           \n"
+	puts "\n\n"	
+end
+
 def fim_do_jogo
   puts "\n\nFim do jogo"
 end
