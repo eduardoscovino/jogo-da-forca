@@ -37,7 +37,7 @@ def avisa_tentativa(tentativa, maximo)
 end
 
 def pede_chute
-  puts "Qual é o seu chute?"
+  puts "Qual é o seu chute da rodada?"
 end
 
 def avisa_chute(chute)

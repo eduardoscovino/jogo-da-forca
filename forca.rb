@@ -35,8 +35,9 @@ diz_num_letras(palavra_secreta, view_palavra)
 max_tentativas = 4
 tentativa_atual = 0
 ganhou_jogo = false
+acabou_jogo = false
 
-while tentativa_atual <= max_tentativas
+while acabou_jogo == false #(tentativa_atual <= max_tentativas || ganhou_jogo == false)
   # num de tentativas
   avisa_tentativa(tentativa_atual, max_tentativas)
 
@@ -50,7 +51,7 @@ while tentativa_atual <= max_tentativas
     if palavra_correta?(chute, palavra_secreta)
       ganhou_jogo = true
       view_palavra = chute.chars
-      tentativa_atual = max_tentativas + 1
+      acabou_jogo = true
     else
       errou_chute(view_palavra)
       tentativa_atual += 1
@@ -63,14 +64,19 @@ while tentativa_atual <= max_tentativas
       tentativa_atual += 1
     end
   end
+
   # desenho da forca
   desenha_forca(tentativa_atual)
+
+  # perder o jogo
+  if tentativa_atual == max_tentativas
+    acabou_jogo = true
+  end
+
   # proximo chute
-  if array_incompleto?(view_palavra)
-    puts "Próximo chute"
-  else
+  if !array_incompleto?(view_palavra)
     ganhou_jogo = true
-    tentativa_atual = max_tentativas + 1
+    acabou_jogo = true
   end
 end
 
